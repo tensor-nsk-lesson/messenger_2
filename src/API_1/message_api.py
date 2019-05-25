@@ -15,17 +15,20 @@ def get_id_to_add_in(table):
 def get_hash(s):
     return s
 
-
-@app.route("/login")
+# Вход в систему
+@app.route("/login", methonds=['POST'])
 def login():
-    cursor.execute('SET search_path TO public')
-    cursor.execute('SELECT * FROM \"User\"')
-    mes = ''
+    cursor.execute("SET search_path TO public")
+    num = "89518074028"
+    pas = "qwerty2"
+    cursor.execute("SELECT * FROM \"Authorization\"")
+    mes = ""
     for table in cursor.fetchall():
-        mes += table.__str__() + "<br>"
+        if table[2] == pas and table[3] == num:
+            return "Successfully"
     cursor.close()
     connect.close()
-    return mes
+    return "Login or Password not found"
 
 
 # регистрация
@@ -45,7 +48,7 @@ def signup():
         cursor.execute('INSERT INTO \"Authorization\" (id_user, user_number, password_user) \
                         VALUES (' + get_id_to_add_in('User') + ' ' + \
                                     num + ' \'' + \
-                                    get_hash(request.form['passowrd']) + '\'')
+                                    get_hash(request.form['password']) + '\'')
         res = 'ok'
     return res
 
