@@ -2,56 +2,30 @@ from flask import Flask, request
 import psycopg2
 
 app = Flask(__name__)
-
-# подключение к таблице
-connect = psycopg2.connect("host=90.189.168.29 dbname=messenger_2 user=messenger_2 password=messenger_2")
-cursor = connect.cursor()
-
-
-def get_id_to_add_in(table):
-    return len(cursor.execute('SELECT * FROM \"' + table + '\"').fetchall())
-
-
-def get_hash(s):
-    return s
-
-# Вход в систему
-@app.route("/login", methonds=['POST'])
+# Регистрация
+@app.route("/signup", methonds=['POST'])
 def login():
+    connect = psycopg2.connect("host=90.189.168.29 dbname=messenger_2 user=messenger_2 password=messenger_2")
+    cursor = connect.cursor()
     cursor.execute("SET search_path TO public")
-    num = "89518074028"
-    pas = "qwerty2"
-    cursor.execute("SELECT * FROM \"Authorization\"")
-    mes = ""
+    cursor.execute("SELECT count(*) FROM \"User\"")
     for table in cursor.fetchall():
-        if table[2] == pas and table[3] == num:
-            return "Successfully"
+        num = table[0] + 1
+        num = str(num)
+    age = request.form['age']
+    username = request.form['username']
+    cursor.execute("INSERT INTO \"User\" ( id_user, age, user_name, avatar, visit_time, status_user)"
+                   "VALUES(" + num + "," + age + "," + username + " , 'default', now(),'1');")
+    user_number = request.form['user_number']
+    password = request.form['password']
+    cursor.execute("INSERT INTO \"Authorization\" (id_auth, id_user, user_number, password)" 
+                   "VALUES(" + num + "," + user_number + "," + password + ") "
+                                                                          "SELECT 'id_user' FROM \"User\" "
+                                                                          "WHERE id_user = " + num + ";")
     cursor.close()
+    connect.commit()
     connect.close()
-    return "Login or Password not found"
-
-
-# регистрация
-@app.route('/signup', methonds=['POST'])
-def signup():
-    cursor.execute('SET search_path TO public')
-    num = request.form['num']
-    cursor.execute('SELECT user_number \
-                    FROM \"Authorization\" \
-                    WHERE user_number \
-                    LIKE ' + num)
-    usr = cursor.fetchone()
-    res = ''
-    if usr is not None:
-        res = 'denied'
-    else:
-        cursor.execute('INSERT INTO \"Authorization\" (id_user, user_number, password_user) \
-                        VALUES (' + get_id_to_add_in('User') + ' ' + \
-                                    num + ' \'' + \
-                                    get_hash(request.form['password']) + '\'')
-        res = 'ok'
-    return res
-
+    return 'Succesfully'
 
 if __name__ == "__main__":
     app.run()
