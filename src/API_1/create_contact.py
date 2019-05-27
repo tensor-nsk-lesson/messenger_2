@@ -14,7 +14,7 @@ def login():
     for table in cursor.fetchone():
         num = table[0] + 1
         num = str(num)
-    cursor.execute("INSERT INTO \"Message\" (id_cont, id_user, id_user_cont, cont_status)" 
+    cursor.execute("INSERT INTO \"Contact\" (id_cont, id_user, id_user_cont, cont_status)" 
                    "VALUES(" + num + ", " + user_id + ", " + user_id_cont + ",'1');")
     cursor.close()
     connect.commit()
