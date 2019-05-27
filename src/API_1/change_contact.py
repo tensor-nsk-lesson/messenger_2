@@ -3,7 +3,7 @@ import psycopg2
 
 app = Flask(__name__)
 # Создание контакта
-@app.route("/chat", methonds=['POST'])
+@app.route("/contacts", methonds=['POST'])
 def login():
     connect = psycopg2.connect("host=90.189.168.29 dbname=messenger_2 user=messenger_2 password=messenger_2")
     cursor = connect.cursor()
@@ -11,7 +11,7 @@ def login():
     id_cont = request.form['user_id_cont']
     user_id_cont = request.form['user_id_cont']
     user_id = request.form['user_id']
-    cursor.execute("UPDATE \"Contact\" SET 'cont_status' WHERE 'id_cont' = " + id_cont + ";")
+    cursor.execute("UPDATE \"Contact\" SET 'cont_status' = '0' WHERE 'id_cont' = " + id_cont + ";")
     cursor.execute("SELECT count(*) FROM \"Contact\"")
     for table in cursor.fetchone():
         num = table[0] + 1
