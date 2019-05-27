@@ -3,7 +3,7 @@ import psycopg2
 
 app = Flask(__name__)
 # Получение всех контактов
-@app.route("/contacts", methonds=['GET'])
+@app.route("/contacts", methods=['GET'])
 def login():
     connect = psycopg2.connect("host=90.189.168.29 dbname=messenger_2 user=messenger_2 password=messenger_2")
     cursor = connect.cursor()
