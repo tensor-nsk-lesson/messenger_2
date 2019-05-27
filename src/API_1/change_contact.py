@@ -11,8 +11,8 @@ def login():
     id_cont = request.form['user_id_cont']
     user_id_cont = request.form['user_id_cont']
     user_id = request.form['user_id']
-    cursor.execute("SELECT count(*) FROM \"Contact\"")
     cursor.execute("UPDATE \"Contact\" SET 'cont_status' WHERE 'id_cont' = " + id_cont + ";")
+    cursor.execute("SELECT count(*) FROM \"Contact\"")
     for table in cursor.fetchone():
         num = table[0] + 1
         num = str(num)
