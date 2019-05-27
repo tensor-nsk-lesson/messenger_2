@@ -2,8 +2,8 @@ from flask import Flask, request
 import psycopg2
 
 app = Flask(__name__)
-# Авторизация
-@app.route("/profile", methonds=['GET'])
+# Получение доступных чатов
+@app.route("/chat", methonds=['GET'])
 def login():
     connect = psycopg2.connect("host=90.189.168.29 dbname=messenger_2 user=messenger_2 password=messenger_2")
     cursor = connect.cursor()

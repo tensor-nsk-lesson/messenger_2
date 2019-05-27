@@ -2,7 +2,7 @@ from flask import Flask, request
 import psycopg2
 
 app = Flask(__name__)
-# Авторизация
+# Получение профиля пользователя
 @app.route("/profile", methonds=['GET'])
 def login():
     connect = psycopg2.connect("host=90.189.168.29 dbname=messenger_2 user=messenger_2 password=messenger_2")
