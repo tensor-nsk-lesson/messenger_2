@@ -9,7 +9,7 @@ def login():
     cursor = connect.cursor()
     cursor.execute("SET search_path TO public")
     cursor.execute("SELECT count(*) FROM \"User\"")
-    for table in cursor.fetchall():
+    for table in cursor.fetchone():
         num = table[0] + 1
         num = str(num)
     age = request.form['age']
