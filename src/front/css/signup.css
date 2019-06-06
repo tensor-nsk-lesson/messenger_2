@@ -1,0 +1,8 @@
+input{background-color: black; width: 140px;margin-bottom: 5px;color:red; outline: none;}
+button{background-color: white; border-radius: 5px; width: 140px; margin-top: 10px;color:red;}
+body{
+	background-image: url(../img/bground.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    color: white;
+}

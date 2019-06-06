@@ -1,0 +1,11 @@
+input{background-color: black; width: 140px; color:red; margin-bottom: 10px; outline: none;}
+button{background-color: white; border-radius: 5px; width: 90px;height:25px; margin-top: 10px; color:red;}
+body{
+	background-image: url(../img/bground.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+}
+.okno{padding: 200px;}
+.text_auth{font-size: 22px; color:white;}
+.button_login:hover{color:black;background-color:rgb(140,140,140);}
+}
