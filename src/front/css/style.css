@@ -25,7 +25,7 @@ body{
 	border-radius: 20px;
 	margin-top: 200px;
 	width: 250px;
-	height:180px;
+	height:200px;
 	background-color: rgba(0,0,0,0.7);
 }
 
@@ -38,4 +38,8 @@ body{
 .button_login:hover{
 	color:rgb(0,0,0);
 	background-color:rgba(255,0,0,0.8);}
+}
+
+.signup_link{
+	width: 1000px;
 }
