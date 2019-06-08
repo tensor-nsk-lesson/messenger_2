@@ -3,7 +3,7 @@ import psycopg2
 
 app = Flask(__name__)
 # Авторизация
-@app.route("/login", methods=['POST'])
+@app.route("/login", methods=['POST','GET'])
 def login():
     connect = psycopg2.connect("host=90.189.168.29 dbname=messenger_2 user=messenger_2 password=messenger_2")
     cursor = connect.cursor()
@@ -14,7 +14,7 @@ def login():
     mes = ''
     for table in cursor.fetchone():
         if table[2] == number and table[3] == password:
-            return 'Succesfuly'
+            return 'Succesfully'
     cursor.close()
     connect.commit()
     connect.close()
