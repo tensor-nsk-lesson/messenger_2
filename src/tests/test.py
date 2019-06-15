@@ -7,8 +7,8 @@ class TestApi(unittest.TestCase):
 # Тест регистрации
     def test_signup(self):
         data = {
-            'user_name': 'jjjjake222',
             'user_number': '+79990009900',
+            'user_name': 'topka',
             'password': 'qazwsx123'
         }
         resp = requests.post('http://127.0.0.1:5000/signup', json=data)
@@ -16,12 +16,14 @@ class TestApi(unittest.TestCase):
         self.assertIsNotNone(resp.text)
 
 # Тест авторизации
-    def test_auth(self):
+    def test_login(self):
         data = {
-            'user_number': 'jjjjake222',
+            'user_number': '+79990009900',
             'password': 'qazwsx123'
         }
         resp = requests.post('http://127.0.0.1:5000/login', json=data)
+        global id_session
+        id_session = resp.json().get('session')
         self.assertEqual(resp.status_code, 200)
         self.assertIsNotNone(resp.text)
 
@@ -30,6 +32,7 @@ class TestApi(unittest.TestCase):
         data = {
             "id_user": 1
         }
+        #global id_session
         resp = requests.get('http://127.0.0.1:5000/chat')
         self.assertEqual(resp.status_code, 200)
         self.assertIsNotNone(resp.text)
@@ -52,7 +55,7 @@ class TestApi(unittest.TestCase):
             "id_permission":1,
             "name_chat":"Печеньки v2"
         }
-        resp = requests.put('http://127.0.0.1:5000/chat')
+        resp = requests.put('http://127.0.0.1:5000/chat/'+id_chat)
         self.assertEqual(resp.status_code, 200)
         self.assertIsNotNone(resp.text)
 
@@ -61,7 +64,8 @@ class TestApi(unittest.TestCase):
         data = {
             "id_chat": 1
         }
-        resp = requests.get('http://127.0.0.1:5000/chat')
+        #global id_session
+        resp = requests.get('http://127.0.0.1:5000/chat/'+id_chat)
         self.assertEqual(resp.status_code, 200)
         self.assertIsNotNone(resp.text)
 
@@ -71,7 +75,8 @@ class TestApi(unittest.TestCase):
             "id_chat": 1,
             "text_message": "Как дела?"
         }
-        resp = requests.post('http://127.0.0.1:5000/chat', json=data)
+        #global id_session
+        resp = requests.post('http://127.0.0.1:5000/chat'+id_chat, json=data)
         self.assertEqual(resp.status_code, 200)
         self.assertIsNotNone(resp.text)
 
@@ -82,7 +87,8 @@ class TestApi(unittest.TestCase):
             "id_message": 1,
             "text_message": "Как погода?"
         }
-        resp = requests.post('http://127.0.0.1:5000/chat', json=data)
+        #global id_session
+        resp = requests.post('http://127.0.0.1:5000/chat'+id_chat, json=data)
         self.assertEqual(resp.status_code, 200)
         self.assertIsNotNone(resp.text)
 
@@ -93,7 +99,8 @@ class TestApi(unittest.TestCase):
             "id_message": 1,
             "del_mes": True
         }
-        resp = requests.put('http://127.0.0.1:5000/chat', json=data)
+        #global id_session
+        resp = requests.put('http://127.0.0.1:5000/chat/'+id_chat, json=data)
         self.assertEqual(resp.status_code, 200)
         self.assertIsNotNone(resp.text)
 
@@ -103,6 +110,7 @@ class TestApi(unittest.TestCase):
             'id_user': 1,
             'id_user_cont': 2
         }
+        #global id_session
         resp = requests.post('http://127.0.0.1:5000/contacts', json=data)
         self.assertEqual(resp.status_code, 200)
         self.assertIsNotNone(resp.text)
@@ -112,6 +120,7 @@ class TestApi(unittest.TestCase):
         data = {
             'id_user':1
         }
+        #global id_session
         resp = requests.get('http://127.0.0.1:5000/contacts')
         self.assertEqual(resp.status_code, 200)
         self.assertIsNotNone(resp.text)
@@ -131,7 +140,7 @@ def test_get_profile(self):
         data = {
             "id_user": 1,
         }
-        resp = requests.get('http://127.0.0.1:5000/profile', json=data)
+        resp = requests.get('http://127.0.0.1:5000/profile'+id_user, json=data)
         self.assertEqual(resp.status_code, 200)
         self.assertIsNotNone(resp.text) 
 
@@ -154,8 +163,9 @@ def test_edit_profile(self):
 def test_del_profile(self):
         data = {
             "id_user": 1,
-            "status_user": False
+            "status_user": False,
         }
+        #global id_session
         resp = requests.put('http://127.0.0.1:5000/profile', json=data)
         self.assertEqual(resp.status_code, 200)
         self.assertIsNotNone(resp.text) 
