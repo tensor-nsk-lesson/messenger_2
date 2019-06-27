@@ -1,0 +1,11 @@
+.main__navBar__items{
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.main__navBar__items__img{
+    height: 25px;
+}
